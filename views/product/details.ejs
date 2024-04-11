@@ -1,0 +1,63 @@
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+
+<body class="bg-gray-100">
+  <%- include("../partials/nav.ejs") %>
+
+  <div class="container mx-auto px-4">
+
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">Product Details</h2>
+        <div>
+          <a href="/products/<%= product._id %>/edit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+            Update
+          </a>
+          <form action="/products/<%= product._id %>?_method=DELETE" method="POST" class="inline">
+            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Delete
+            </button>
+          </form>
+        </div>
+      </div>
+
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
+      <div class="px-4 py-5 sm:px-6">
+        <h2 class="text-lg leading-6 font-medium text-gray-900">
+          <%= product.name %>
+        </h2>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+          <%= product.description %>
+        </p>
+      </div>
+      <div class="border-t border-gray-200">
+        <dl>
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              Manufacturer
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <%= product.manufacturer %>
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              Price
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <%= product.price %>
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              Image
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <img src="<%= product.image %>" alt="<%= product.name %>" class="w-20 h-20 object-cover">
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
