@@ -48,10 +48,35 @@ const product_delete = (req, res) => {
     });
 }
 
+const product_search = (req, res) => {
+  const query = req.query.q;
+  let sort = {};
+
+  switch (req.query.sort) {
+    case 'price_asc':
+      sort = { price: 1 };
+      break;
+    case 'price_desc':
+      sort = { price: -1 };
+      break;
+    default:
+      sort = {};
+  }
+
+  Product.find({ name: new RegExp(query, 'i') }).sort(sort)
+    .then(result => {
+      res.render('partials/search_result', { products: result, title: 'Search results' });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 module.exports = {
   product_index,
   product_details,
   product_create_get,
   product_create_post,
-  product_delete
+  product_delete,
+  product_search
 }
