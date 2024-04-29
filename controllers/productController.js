@@ -103,11 +103,44 @@ const product_search = (req, res) => {
     });
 };
 
+const product_edit_get = (req, res) => {
+  const id = req.params.id;
+  Product.findById(id)
+    .then(result => {
+      res.render('product/edit', { product: result, title: 'Edit Product' });
+    })
+    .catch(err => {
+      console.log(err);
+      res.render('404', { title: 'Product not found' });
+    });
+}
+
+const product_edit_put = (req, res) => {
+  const id = req.params.id;
+  const url = req.protocol + '://' + req.get('host');
+
+  let product = { ...req.body };
+
+  if (req.file) {
+    product.image = url + '/uploads/' + req.file.filename;
+  }
+
+  Product.findByIdAndUpdate(id, product)
+    .then(result => {
+      res.redirect('/products/' + id);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 module.exports = {
   product_index,
   product_details,
   product_create_get,
   product_create_post,
   product_delete,
-  product_search
+  product_search,
+  product_edit_get,
+  product_edit_put,
 }
