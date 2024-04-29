@@ -42,7 +42,13 @@ const product_create_get = (req, res) => {
 }
 
 const product_create_post = (req, res) => {
-  const product = new Product(req.body);
+  const url = req.protocol + '://' + req.get('host');
+
+  const product = new Product({
+    ...req.body,
+    image: url + '/uploads/' + req.file.filename,
+  });
+
   product.save()
     .then(result => {
       res.redirect('/products');
