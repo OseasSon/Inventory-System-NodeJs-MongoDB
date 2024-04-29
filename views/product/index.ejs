@@ -42,6 +42,18 @@
             }
           });
         });
+
+        // Pagination links click event handlers
+        $(document).on('click', 'a[href^="/products?page="]', function(event){
+          event.preventDefault();
+          $.ajax({
+            url: $(this).attr('href'),
+            type: 'GET',
+            success: function(data){
+              $('#product-table').replaceWith(data);
+            }
+          });
+        });
       });
     </script>
   </body>

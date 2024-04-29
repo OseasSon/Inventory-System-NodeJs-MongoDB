@@ -1,9 +1,24 @@
 const Product = require('../models/product');
 
 const product_index = (req, res) => {
-  Product.find().sort({ createdAt: -1 })
+  const page = parseInt(req.query.page) || 1;
+  const limit = 25;
+  const skip = (page - 1) * limit;
+
+  Product.find()
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
     .then(result => {
-      res.render('product/index', { products: result, title: 'All products' });
+      Product.countDocuments()
+        .then(count => {
+          const totalPages = Math.ceil(count / limit);
+          if (req.xhr) {
+            res.render('partials/search_result', { products: result, page, totalPages });
+          } else {
+            res.render('product/index', { products: result, title: 'All products', page, totalPages });
+          }
+        });
     })
     .catch(err => {
       console.log(err);
@@ -51,6 +66,9 @@ const product_delete = (req, res) => {
 const product_search = (req, res) => {
   const query = req.query.q;
   let sort = {};
+  const page = parseInt(req.query.page) || 1;
+  const limit = 25;
+  const skip = (page - 1) * limit;
 
   switch (req.query.sort) {
     case 'price_asc':
@@ -63,9 +81,16 @@ const product_search = (req, res) => {
       sort = {};
   }
 
-  Product.find({ name: new RegExp(query, 'i') }).sort(sort)
+  Product.find({ name: new RegExp(query, 'i') })
+    .sort(sort)
+    .skip(skip)
+    .limit(limit)
     .then(result => {
-      res.render('partials/search_result', { products: result, title: 'Search results' });
+      Product.countDocuments({ name: new RegExp(query, 'i') })
+        .then(count => {
+          const totalPages = Math.ceil(count / limit);
+          res.render('partials/search_result', { products: result, title: 'Search results', page, totalPages });
+        });
     })
     .catch(err => {
       console.log(err);
