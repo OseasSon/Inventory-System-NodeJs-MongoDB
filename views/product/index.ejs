@@ -1,44 +1,49 @@
 <html lang="en">
 <%- include("../partials/head.ejs") %>
 
-  <body class="">
+  <body class="mb-10 font-sans">
     <%- include("../partials/nav.ejs") %>
 
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto max-w-screen-xl px-4">
 
       <div class="flex justify-between items-center mb-4">
-        <a href="/products/create" class="bg-blue-500 hover:bg-blue-700 text-white ml-auto py-2 px-4 rounded">
+        <!-- Search form -->
+        <form action="/products/search" method="GET" class="flex">
+          <input type="text" name="q" placeholder="Search products..." class="border px-2 py-1 rounded mr-2">
+          <select name="sort" class="border px-2 py-1 rounded mr-2 w-48">
+            <option value="">No Sorting</option>
+            <option value="price_asc">Price (Low to High)</option>
+            <option value="price_desc">Price (High to Low)</option>
+          </select>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded">Search</button>
+        </form>
+
+        <a href="/products/create" class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded self-start">
           New Product
         </a>
       </div>
 
-      <!-- Search form -->
-      <form action="/products/search" method="GET" class="mb-4">
-        <input type="text" name="q" placeholder="Search products..." class="border px-2 py-1 rounded">
-        <select name="sort" class="border px-2 py-1 rounded">
-          <option value="">No Sorting</option>
-          <option value="price_asc">Price (Low to High)</option>
-          <option value="price_desc">Price (High to Low)</option>
-        </select>
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded">Search</button>
-      </form>
-
       <div id="product-table">
-        <%- include("../partials/search_result.ejs") %>
+        <%- include("../partials/products_table.ejs") %>
       </div>
     </div>
 
     <script>
       $(document).ready(function(){
+        var searchQuery = '';
+        var sortOption = '';
+
         $('form').on('submit', function(event){
           event.preventDefault();
           var form = $(this);
+          searchQuery = form.find('input[name="q"]').val();
+          sortOption = form.find('select[name="sort"]').val();
           $.ajax({
             url: form.attr('action'),
             type: 'GET',
             data: form.serialize(),
             success: function(data){
-              $('#product-table').replaceWith(data);
+              $('#product-table').html(data);
             }
           });
         });
@@ -46,11 +51,16 @@
         // Pagination links click event handlers
         $(document).on('click', 'a[href^="/products?page="]', function(event){
           event.preventDefault();
+          var pageUrl = $(this).attr('href');
           $.ajax({
-            url: $(this).attr('href'),
+            url: pageUrl,
             type: 'GET',
+            data: {
+              q: searchQuery,
+              sort: sortOption
+            },
             success: function(data){
-              $('#product-table').replaceWith(data);
+              $('#product-table').html(data);
             }
           });
         });

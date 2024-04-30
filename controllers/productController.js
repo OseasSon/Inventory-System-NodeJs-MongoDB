@@ -14,7 +14,7 @@ const product_index = (req, res) => {
         .then(count => {
           const totalPages = Math.ceil(count / limit);
           if (req.xhr) {
-            res.render('partials/search_result', { products: result, page, totalPages });
+            res.render('partials/products_table', { products: result, page, totalPages });
           } else {
             res.render('product/index', { products: result, title: 'All products', page, totalPages });
           }
@@ -95,7 +95,7 @@ const product_search = (req, res) => {
       Product.countDocuments({ name: new RegExp(query, 'i') })
         .then(count => {
           const totalPages = Math.ceil(count / limit);
-          res.render('partials/search_result', { products: result, title: 'Search results', page, totalPages });
+          res.render('partials/products_table', { products: result, title: 'Search results', page, totalPages });
         });
     })
     .catch(err => {

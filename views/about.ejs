@@ -1,0 +1,45 @@
+<html lang="en">
+<%- include("partials/head.ejs") %>
+
+<body class="bg-white font-sans leading-relaxed">
+    <%- include("partials/nav.ejs") %>
+
+    <div class="container mx-auto px-4 max-w-screen-md mt-8 mb-10">
+        <h2 class="text-3xl font-semibold mb-4">About This Page</h2>
+        <p class="text-base text-justify mb-4 leading-relaxed">Welcome! :)</p>
+        <p class="text-base text-justify mb-4 leading-relaxed">In this page, we provide an overview of the app, including its technical specifications, weaknesses, and potential for future development. Please read on for more details.</p>
+
+        <h3 class="text-2xl font-medium mt-8 mb-4">General Description</h3>
+        <p class="text-base text-justify mb-4 leading-relaxed">The application's main purpose is for catalogue management. Built with Node.js, it utilises Express.js as the server framework and MongoDB as the database. Users can manage products through CRUD operations: add, view, edit, and delete. Additionally, AJAX is used for asynchronous data fetching, more specifically, for handling pagination, search, and sorting requests without requiring a page reload when new data is fetched from the server.</p>
+
+        <h3 class="text-2xl font-medium mt-8 mb-4">Technologies Used</h3>
+        <p class="text-base text-justify mb-4 leading-relaxed">The project was mainly built with:</p>
+        <ul class="list-disc list-inside">
+            <li class="mb-2">Node.js: A JavaScript runtime for building the server-side of the application.</li>
+            <li class="mb-2">Express.js: A web application framework for Node.js, used to construct the web server.</li>
+            <li class="mb-2">MongoDB: A NoSQL database for storing product data.</li>
+            <li class="mb-2">Mongoose: An Object Data Modeling (ODM) library for MongoDB and Node.js.</li>
+            <li class="mb-2">EJS: A templating engine for generating HTML markup with plain JavaScript.</li>
+            <li class="mb-2">AJAX: A technique for creating asynchronous web applications, fetching data from the server without reloading the page.</li>
+            <li class="mb-2">Multer: A middleware for handling file uploads.</li>
+        </ul>
+
+        <h3 class="text-2xl font-medium mt-8 mb-4">Application Weaknesses</h3>
+        <p class="text-base text-justify mb-4 leading-relaxed">Some potentially useful features were left outside of the project's scope, so they can be recognise as weaknessess:</p>
+        <ul class="list-disc list-inside">
+            <li class="mb-2">Authentication: Currently, anyone can add, edit, or delete products. User authentication could provide better control over these actions.</li>
+            <li class="mb-2">More sorting and filtering options: The app currently allows searches by product name and sorting by price. Ideally, users should be able to filter and sort all available data columns.</li>
+            <li class="mb-2">Testing: No advanced testing was performed for the app, so it is difficult to ensure its reliability.</li>
+        </ul>
+
+        <h3 class="text-2xl font-medium mt-8 mb-4">Alternative Implementations</h3>
+        <p class="text-base text-justify mb-4 leading-relaxed">There are many alternative ways this app could’ve been implemented. Some are listed below:</p>
+        <ul class="list-disc list-inside">
+            <li class="mb-2">Frontend Framework: A frontend framework like React or Vue.js could replace EJS for templating, creating a more interactive user interface.</li>
+            <li class="mb-2">Backend Framework: The backend could have been built with Django or Ruby on Rails to provide a more structured and organised codebase.</li>
+            <li class="mb-2">Database: The database could have been built with PostgreSQL or MySQL.</li>
+            <li class="mb-2">Data Fetching: Techniques like the Fetch API could replace AJAX for data fetching.</li>
+        </ul>
+    </div>
+</body>
+</html>
